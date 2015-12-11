@@ -1,5 +1,6 @@
 var React = require('react-native');
 var api = require('../Utils/api');
+var Dashboard = require('./Dashboard');
 
 var{
 	View,
@@ -15,7 +16,7 @@ class Main extends React.Component{
 		super(props);
 		this.state = {
 			username: '',
-			isloading: false,
+			isLoading: false,
 			error: false
 		}
 	}
@@ -23,13 +24,13 @@ class Main extends React.Component{
 	handleChange(event){
 		this.setState({
 			username: event.nativeEvent.text
-		});
+		})
 	}
 
 	handleSubmit(){
 		//update our indicatorIOS spinner
 		this.setState({
-			isloading: true
+			isLoading: true
 		});
 		// console.log('SUBMIT', this.state.username);
 		//fetch data from github
@@ -38,16 +39,16 @@ class Main extends React.Component{
 				if(res.message === 'not found'){
 					this.setState({
 						error: 'User not found',
-						isloading: false
+						isLoading: false
 					})
 				} else {
 					this.props.navigator.push({
 						title: res.name || "Select an Option",
-						Component: Dashboard,
+						component: Dashboard,
 						passProps: {userInfo: res}
 					});
 					this.setState({
-						isloading: false,
+						isLoading: false,
 						error: false,
 						username: ''
 					});
