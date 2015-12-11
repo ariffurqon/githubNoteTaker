@@ -5,7 +5,10 @@
 'use strict';
 
 var React = require('react-native');
+var Main = require('./App/Components/Main');
+
 var {
+  NavigatorIOS,
   AppRegistry,
   StyleSheet,
   Text,
@@ -15,11 +18,12 @@ var {
 class githubNoteTaker extends React.Component{
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Hello Lover!
-        </Text>
-      </View>
+      <NavigatorIOS
+        style={styles.container}
+        initialRoute={{
+          title: 'Github Notetaker',
+          component: Main
+        }} />
     );
   }
 };
@@ -27,19 +31,7 @@ class githubNoteTaker extends React.Component{
 var styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
   },
 });
 
