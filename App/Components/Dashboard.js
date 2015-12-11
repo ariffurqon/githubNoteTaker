@@ -1,13 +1,31 @@
 var React = require('react-native');
 var Profile = require('./Profile');
+var Repositories = require('./Repositories')
+var api = require('../Utils/api');
+
 
 var {
-	Text,
-	View,
-	StyleSheet,
-	Image,
-	TouchableHighlight
+  Text,
+  View,
+  StyleSheet,
+  Image,
+  TouchableHighlight
 } = React;
+
+var styles = StyleSheet.create({
+  container: {
+    marginTop: 65,
+    flex: 1
+  },
+  image: {
+    height: 350,
+  },
+  buttonText: {
+    fontSize: 24,
+    color: 'white',
+    alignSelf: 'center'
+  }
+});
 
 class Dashboard extends React.Component{
    makeBackground(btn){
@@ -27,10 +45,24 @@ class Dashboard extends React.Component{
     return obj;
   }
   goToProfile(){
-    console.log('Going to Profile Page');
+    this.props.navigator.push({
+      component: Profile,
+      title: 'Profile Page',
+      passProps: {userInfo: this.props.userInfo}
+    })
   }
   goToRepos(){
-    console.log('Going to Repos');
+    api.getRepos(this.props.userInfo.login)
+      .then((res) => {
+        this.props.navigator.push({
+          component: Repositories,
+          title: 'Repos Page',
+          passProps: {
+            userInfo: this.props.userInfo,
+            repos: res
+          }
+        });
+    });
   }
   goToNotes(){
   console.log('Going to Notes');
