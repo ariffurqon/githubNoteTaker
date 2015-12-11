@@ -1,4 +1,5 @@
 var React = require('react-native');
+var api = require('../Utils/api');
 
 var{
 	View,
@@ -30,8 +31,28 @@ class Main extends React.Component{
 		this.setState({
 			isloading: true
 		});
-		console.log('SUBMIT', this.state.username);
+		// console.log('SUBMIT', this.state.username);
 		//fetch data from github
+		api.getBio(this.state.username)
+			.then((res) => {
+				if(res.message === 'not found'){
+					this.setState({
+						error: 'User not found',
+						isloading: false
+					})
+				} else {
+					this.props.navigator.push({
+						title: res.name || "Select an Option",
+						Component: Dashboard,
+						passProps: {userInfo: res}
+					});
+					this.setState({
+						isloading: false,
+						error: false,
+						username: ''
+					});
+				}
+			});
 		//reroute to the next passing that github information
 	}
 
@@ -100,7 +121,7 @@ var styles = StyleSheet.create({
 	    justifyContent: 'center'
 	  },
 
-	
+
 });
 
 module.exports = Main;
