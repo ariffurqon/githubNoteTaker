@@ -1,14 +1,15 @@
 var React = require('react-native');
 var Profile = require('./Profile');
-var Repositories = require('./Repositories')
 var api = require('../Utils/api');
-
+var Repositories = require('./Repositories');
+var Notes = require('./Notes');
 
 var {
   Text,
   View,
-  StyleSheet,
+  NavigatorIOS,
   Image,
+  StyleSheet,
   TouchableHighlight
 } = React;
 
@@ -28,7 +29,7 @@ var styles = StyleSheet.create({
 });
 
 class Dashboard extends React.Component{
-   makeBackground(btn){
+  makeBackground(btn){
     var obj = {
       flexDirection: 'row',
       alignSelf: 'stretch',
@@ -53,22 +54,33 @@ class Dashboard extends React.Component{
   }
   goToRepos(){
     api.getRepos(this.props.userInfo.login)
-      .then((res) => {
+      .then((jsonRes) => {
         this.props.navigator.push({
           component: Repositories,
-          title: 'Repos Page',
+          title: "Repositories Page",
           passProps: {
-            userInfo: this.props.userInfo,
-            repos: res
+            repos: jsonRes,
+            userInfo: this.props.userInfo
           }
         });
-    });
+      })
   }
   goToNotes(){
-  console.log('Going to Notes');
+    api.getNotes(this.props.userInfo.login)
+      .then((jsonRes) => {
+        jsonRes = jsonRes || {};
+        this.props.navigator.push({
+          component: Notes,
+          title: 'Notes',
+          passProps: {
+            notes: jsonRes,
+            userInfo: this.props.userInfo
+          }
+        });
+      });
   }
-render(){
-  return (
+  render(){
+    return (
       <View style={styles.container}>
         <Image source={{uri: this.props.userInfo.avatar_url}} style={styles.image}/>
         <TouchableHighlight
@@ -91,7 +103,11 @@ render(){
         </TouchableHighlight>
       </View>
     )
-}
+  }
 };
+
+Dashboard.propTypes = {
+  userInfo: React.PropTypes.object.isRequired
+}
 
 module.exports = Dashboard;

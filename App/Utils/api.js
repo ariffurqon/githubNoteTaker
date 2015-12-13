@@ -7,8 +7,8 @@ var api = {
   getRepos(username){
     username = username.toLowerCase().trim();
     var url = `https://api.github.com/users/${username}/repos`;
-    return fetch(url).then((res) => res.json());
-  }, 
+    return fetch(url).then((res) => res.json())
+  },
    getNotes(username){
     username = username.toLowerCase().trim();
     var url = `https://githubsaver15.firebaseio.com//${username}.json`;
@@ -16,7 +16,7 @@ var api = {
   },
   addNote(username, note){
     username = username.toLowerCase().trim();
-    var url = `https://githubsaver15.firebaseio.com/ari/${username}.json`;
+    var url = `https://githubsaver15.firebaseio.com/${username}.json`;
     return fetch(url, {
       method: 'post',
       body: JSON.stringify(note)

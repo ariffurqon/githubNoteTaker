@@ -7,12 +7,13 @@
 var React = require('react-native');
 var Main = require('./App/Components/Main');
 
+window.React = React;
+
 var {
+  AppRegistry,
   NavigatorIOS,
   AppRegistry,
-  StyleSheet,
-  Text,
-  View,
+  StyleSheet
 } = React;
 
 class githubNoteTaker extends React.Component{

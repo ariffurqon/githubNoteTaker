@@ -39,11 +39,11 @@ var styles = StyleSheet.create({
 class Repositories extends React.Component{
   openPage(url){
     this.props.navigator.push({
-      component: Web_View,
       title: 'Web View',
+      component: Web_View,
       passProps: {url}
     });
-    }
+  }
   render(){
     var repos = this.props.repos;
     var list = repos.map((item, index) => {
