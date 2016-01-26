@@ -17,7 +17,7 @@ $ brew install watchman
 ```
 $ cd githubNoteTaker
 $ npm install
-$ open biblioApp.xcodeproj
+$ open githubNoteTaker.xcodeproj
 ```
 
 Click on the play/run button in Xcode.
